@@ -17,6 +17,13 @@ public class Person {
     } 
      
     private final Gender gender; //Final, gender can't change + is private because we use getter instead of variable
+    
+    public boolean isMarried(){
+        if (this.getSpouse() != null){
+            
+        }
+    }
+    
          
     public boolean checkGender(Gender gender){ 
         if(gender == 0)
@@ -47,6 +54,22 @@ public class Person {
     }
     
     private Person spouse;
+    
+    public void marry(Person person) throws IllegalGenderException, NullPointerException, IllegalStateException{
+        if(! canHaveAsSpouse(person))
+            throw new IllegalGenderException();
+        if(person == null)
+            throw new NullPointerException();
+        if (person.isMarried() || this.isMarried())
+            throw new IllegalStateException();
+        this.setSpouse(person);// Create the marriage
+        person.setSpouse(this); //Idem
+    }
+    
+    private void setSpouse(Person person){ //Cannot be public, otherwise it can be changed later
+        this.spouse = person;
+    } 
+    
     
     
     public static void main(String[] args){
